@@ -37,10 +37,10 @@ public:
     virtual void attaqueBasique(Ennemi* e);
     void recevoirDegats(int degat);
     bool ajouterObjet(Objet* obj);
-    void utiliserObjet(int index);
     void curer(int v);
     void enricher(int g);
     void afficherInventaire ();
+    bool utiliserObjet(int index);
 };
 
 #endif

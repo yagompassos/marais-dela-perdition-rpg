@@ -51,10 +51,19 @@ bool Personnage::ajouterObjet(Objet* obj) {
     while (inventaire[i] != nullptr) {
         i++;
         if (i>=inventaire.size()) {
-            std::cout << "inventario cheio" << std::endl;
+            std::cout << "inventaire rempli." << std::endl;
             return false;
         }
     }
     inventaire[i] = obj;
+    return true;
+}
+
+bool Personnage::utiliserObjet(int index){
+    std::cout << inventaire.size() << std::endl;
+    if (index >= inventaire.size())
+        return false;
+    inventaire[index]->utiliser(this);
+    inventaire[index] = nullptr;
     return true;
 }
