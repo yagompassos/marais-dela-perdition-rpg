@@ -39,7 +39,8 @@ public:
     bool ajouterObjet(Objet* obj);
     void curer(int v);
     void enricher(int g);
-    void afficherInventaire ();
+    bool appauvrir(int prix);
+    void afficherInventaire();
     bool utiliserObjet(int index);
 };
 

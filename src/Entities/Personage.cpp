@@ -35,6 +35,15 @@ void Personnage::enricher(int goldGagne) {
     gold += goldGagne;
 }
 
+bool Personnage::appauvrir(int prix) {
+    if (prix > gold){
+        std::cout << "Pas assez d'argent" << std::endl;
+        return false;
+    } 
+    gold -= prix;
+    return true;
+}
+
 void Personnage::afficherInventaire(){
     std::cout<< "| ";
     for (int i=0; i<inventaire.size(); i++){
@@ -60,7 +69,6 @@ bool Personnage::ajouterObjet(Objet* obj) {
 }
 
 bool Personnage::utiliserObjet(int index){
-    std::cout << inventaire.size() << std::endl;
     if (index >= inventaire.size())
         return false;
     inventaire[index]->utiliser(this);
