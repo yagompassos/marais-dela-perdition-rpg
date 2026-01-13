@@ -18,7 +18,7 @@ public:
     int getLargeur();
     int getHateur();
 
-    void afficher();
+    void afficher(int xJoueur, int yJoueur);
     bool dedantLimits(int x, int y); 
     Case& getCase(int x, int y);
 };

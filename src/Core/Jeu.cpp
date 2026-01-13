@@ -4,11 +4,19 @@ Jeu::Jeu(int largeur, int hauteur) : joueur(nullptr), plateau(largeur, hauteur),
 
 Jeu::~Jeu() {}
 
-bool Jeu::deplacerJoueur(int x, int y) {
-    // to be implemented
-    return true;
+void Jeu::afficherPlateau(){
+    plateau.afficher(xJoueur, yJoueur);
 }
 
-void Jeu::afficherPlateau(){
-    plateau.afficher();
+void Jeu::setJoueur(Personnage *p) {
+    joueur = p;
+}
+
+bool Jeu::deplacerJoueur(int dx, int dy) {
+    if (!plateau.dedantLimits(dx, dy))
+        return false;
+    
+    xJoueur = dx;
+    yJoueur = dy;
+    return true;
 }

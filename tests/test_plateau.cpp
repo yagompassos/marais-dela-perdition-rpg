@@ -22,14 +22,25 @@ int main() {
         case 1:
             std::cout << "Guerrier!" << std::endl;
             hero = new Guerrier();
+            jeu.setJoueur(hero);
             break;
     }
 
     std::cout << "\033[2J\033[1;1H";
 
     jeu.afficherPlateau();
+    std::cout << std::endl; 
+    jeu.deplacerJoueur(1,0);
+    jeu.afficherPlateau();
+    std::cout << std::endl; 
+    if(jeu.deplacerJoueur(15, 9))
+        jeu.afficherPlateau();
+    else 
+        std::cout << "impossible, dehors plateau" << std::endl;
+        std::cout << std::endl; 
+    jeu.deplacerJoueur(7, 8);
+    jeu.afficherPlateau();
 
-    // plateau.remplirAleatoirement(3, 2);
 
     return 0;
 }

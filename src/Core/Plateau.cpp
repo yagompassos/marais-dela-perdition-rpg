@@ -11,8 +11,10 @@ Plateau::Plateau(int largeur, int hauteur): largeur(largeur), hauteur(hauteur) {
     for (int x = 0; x < largeur; x++) {
         grille[x].resize(hauteur);
         for (int y = 0; y < hauteur; y++) {
-            if (x==0 && y==0 || x== largeur-1 && y == hauteur-1)
-                grille[x][y] = Case(); // Cases du heros et du dragon
+            if (x==0 && y==0)
+                grille[x][y] = Case(); // Cases du heros 
+            else if (x==largeur-1 && y==hauteur-1) 
+                grille[x][y] = Case(); //CASE DU DRAGON
             else {
                 int tirage = Random::entier(1, 100);
                 if (tirage<=30) {
@@ -38,10 +40,15 @@ Plateau::~Plateau(){}
 int Plateau::getLargeur() { return largeur; }
 int Plateau::getHateur() { return hauteur; }
 
-void Plateau::afficher(){
-    for (int x=0; x<hauteur; x++) {
-        for (int y=largeur-1; y>=0; y--) {
-            grille[x][y].afficher();
+void Plateau::afficher(int xJoueur, int yJoueur){
+    for (int y=hauteur-1; y>=0; y--) {
+        for (int x=0; x<largeur; x++) {
+            if (x==xJoueur && y==yJoueur)
+                std::cout << "H";
+            else if (x==largeur-1 && y==hauteur-1)
+                std::cout << "D";
+            else
+                grille[x][y].afficher();
             std::cout << " ";
         }
         std::cout << std::endl;
