@@ -2,11 +2,8 @@
 #define MARCHAND_H
 
 class Personnage;
-class PotionSoin;
-class Bouclier;
-class Epee;
-class Parchemin;
 
+// Si le marchand a le prix des objets et si c'est lui qui decide les prix, il faut enlever le prix sur les sous-classes des objets
 class Marchand {
     private:
         int prixPotion = 2;
@@ -15,9 +12,13 @@ class Marchand {
         Marchand();
         virtual ~Marchand();
         bool vendrePotion(Personnage* hero);
-        Bouclier vendreBouclier(Personnage* hero);
-        Epee vendreEpee(Personnage* hero);
-        Parchemin vendreParchemin(Personnage* hero);
+        /*
+        preferer de faire un
+
+        Objet* vendre(TypeObjet type, Personnage& hero);
+
+        au lieu d'un fonction pour chaque vende.
+        */
 };
 
 #endif

@@ -1,5 +1,3 @@
-// C'EST LE PLATEAU DU JEU
-
 #ifndef PLATEAU_H
 #define PLATEAU_H
 
@@ -17,9 +15,11 @@ public:
     Plateau(int largeur, int hauteur);
     virtual ~Plateau();
 
+    int getLargeur();
+    int getHateur();
+
     void afficher();
-    void remplirAleatoirement(int quantiteEnnemi, int quantiteObjets); 
-    // bool deplacerJoueur(int x, int y);  CEST LEL JEU QUI LE DEPLACE 
+    bool dedantLimits(int x, int y); 
     Case& getCase(int x, int y);
 };
 
