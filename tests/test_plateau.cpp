@@ -3,12 +3,13 @@
 #include <vector>
 #include "Entities/Guerrier.hpp"
 #include "Core/Plateau.hpp"
+#include "Core/Jeu.hpp"
 
 int main() {
     int op;
 
+    Jeu jeu(10, 10);
     Personnage *hero = nullptr;
-    Plateau plateau(10,10);
 
     std::cout << "Marais de Perdition" << std::endl;
     std::cout << "Jouer comme:" << std::endl;
@@ -26,7 +27,7 @@ int main() {
 
     std::cout << "\033[2J\033[1;1H";
 
-    plateau.afficher();
+    jeu.afficherPlateau();
 
     // plateau.remplirAleatoirement(3, 2);
 

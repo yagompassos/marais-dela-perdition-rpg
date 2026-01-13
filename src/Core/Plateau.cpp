@@ -5,38 +5,28 @@
 #include "Items/PotionSoin.hpp"
 #include <iostream>
 
-// Plateau::Plateau(int largeur, int hauteur): largeur(largeur), hauteur(hauteur) {
-//     grille.resize(hauteur);
-//     for (int y = 0; y < hauteur; y++) {
-//         grille[y].resize(largeur);
-//         for (int x = 0; x < largeur; x++) {
-//             grille[y][x] = Case();
-//         }
-//     }
-// }
-
 // Constructeur
 Plateau::Plateau(int largeur, int hauteur): largeur(largeur), hauteur(hauteur) {
-    grille.resize(hauteur);
-    for (int y = 0; y < hauteur; y++) {
-        grille[y].resize(largeur);
-        for (int x = 0; x < largeur; x++) {
-            if (y==0 && x==0 || y== hauteur-1 && x == largeur-1)
-                grille[y][x] = Case(); // Cases du heros et du dragon
+    grille.resize(largeur);
+    for (int x = 0; x < largeur; x++) {
+        grille[x].resize(hauteur);
+        for (int y = 0; y < hauteur; y++) {
+            if (x==0 && y==0 || x== largeur-1 && y == hauteur-1)
+                grille[x][y] = Case(); // Cases du heros et du dragon
             else {
                 int tirage = Random::entier(1, 100);
                 if (tirage<=30) {
-                    grille[y][x] = Case();
+                    grille[x][y] = Case();
                 } else if (tirage>30 && tirage<=50) {
                     Gobelin *e = new Gobelin();
-                    grille[y][x] = Case(e);
+                    grille[x][y] = Case(e);
                 } else if (tirage>50 && tirage<=70) {
                     PotionSoin *o = new PotionSoin();
-                    grille[y][x] = Case(o);
+                    grille[x][y] = Case(o);
                 } else if (tirage >70 && tirage<=80) {
-                    grille[y][x] = Case(2);
+                    grille[x][y] = Case(2);
                 } else {
-                    grille[y][x] = Case();
+                    grille[x][y] = Case();
                 }
             }
         }
@@ -45,31 +35,25 @@ Plateau::Plateau(int largeur, int hauteur): largeur(largeur), hauteur(hauteur) {
 
 Plateau::~Plateau(){}
 
+int Plateau::getLargeur() { return largeur; }
+int Plateau::getHateur() { return hauteur; }
+
 void Plateau::afficher(){
-    for (int y=hauteur-1; y>=0; y--) {
-        for (int x=0; x<largeur; x++) {
-            grille[y][x].afficher();
+    for (int x=0; x<hauteur; x++) {
+        for (int y=largeur-1; y>=0; y--) {
+            grille[x][y].afficher();
             std::cout << " ";
         }
         std::cout << std::endl;
     }
 }
 
-void Plateau::remplirAleatoirement(int quantiteEnnemi, int quantiteObjets) {
-    int totalAAjouter = quantiteEnnemi + quantiteObjets;
-    std::vector<int> tirageY = Random::entiersDistincts(1, largeur, totalAAjouter);
-    std::vector<int> tirageX = Random::entiersDistincts(1, hauteur, totalAAjouter);
+bool Plateau::dedantLimits(int x, int y){
+    return x >= 0 && x < largeur && y >= 0 && y < hauteur;
+}
 
-    std::cout << "Tiragem do eixo Y: " ;
-    for (int i=0; i<tirageY.size(); i++)
-        std::cout << tirageY[i] << " ";
-
-    std::cout << std::endl << "Tiragem do eixo X: " ;
-    for (int i=0; i<tirageX.size(); i++)
-        std::cout << tirageX[i] << " ";
-
-    
-    for (int i=1; i<=quantiteEnnemi; i++) {
-        // grille[tirageX[i]][tirageY[i]].setEnnemi();
-    }
+Case &Plateau::getCase(int x, int y) {
+    if (!dedantLimits(x, y))
+        throw std::out_of_range("Coordonnées hors plateau");
+    return grille[x][y];
 }

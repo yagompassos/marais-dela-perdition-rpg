@@ -28,3 +28,6 @@ target_link_libraries(test_entities rpg_lib)
 
 add_executable(test_marchand tests/test_marchand.cpp)
 target_link_libraries(test_marchand rpg_lib)
+
+add_executable(test_plateau tests/test_plateau.cpp)
+target_link_libraries(test_plateau rpg_lib)
