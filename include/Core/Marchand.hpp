@@ -19,6 +19,10 @@ class Marchand {
 
         au lieu d'un fonction pour chaque vende.
         */
+
+        bool vendre(int op, Personnage* hero);
+
+        void afficher();
 };
 
 #endif

@@ -41,6 +41,7 @@ public:
     void enricher(int g);
     bool appauvrir(int prix);
     void afficherInventaire();
+    void afficherStats();
     bool utiliserObjet(int index);
 };
 

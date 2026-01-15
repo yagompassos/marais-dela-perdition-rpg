@@ -16,7 +16,7 @@ public:
     virtual ~Plateau();
 
     int getLargeur();
-    int getHateur();
+    int getHauteur();
 
     void afficher(int xJoueur, int yJoueur);
     bool dedantLimits(int x, int y); 

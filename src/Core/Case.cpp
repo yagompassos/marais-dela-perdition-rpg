@@ -1,6 +1,7 @@
 #include "Core/Case.hpp"
 #include "Entities/Ennemi.hpp"
 #include "Items/Objet.hpp"
+#include "Core/icones.hpp"
 #include <iostream>
 
 Case::Case() : goldTrouve(0), objet(nullptr), ennemi(nullptr), visite(false) {}
@@ -16,10 +17,8 @@ void Case::retirerEnnemi() { ennemi = nullptr; }
 void Case::retirerItem() { objet = nullptr; }
 
 bool Case::estVide(){
-    if (objet == nullptr && ennemi == nullptr){
-        std::cout << "l'Case est vide" << std::endl; 
+    if (objet == nullptr && ennemi == nullptr)
         return true;
-    } 
     return false;
 }
 
@@ -37,13 +36,13 @@ bool Case::contientObjet(){
         return true;
 }
 
-void Case::afficher() {
-    if (contientEnnemi())
-        std::cout << "E" ; // changer pour      ennemi->afficher();
-    else if (contientObjet())
-        std::cout << "O" ;
-    else if (goldTrouve > 0)
-        std::cout << goldTrouve;
+void Case::afficher(bool visible) {
+    if (!visible)
+        std::cout << Icone::VIDE ;
+    else if (contientEnnemi())
+        ennemi->afficher();
+    else if (contientObjet() || goldTrouve > 0)
+        std::cout << Icone::BAU ;
     else
-        std::cout << "_" ;
+        std::cout << Icone::ILE ;
 }
