@@ -1,6 +1,6 @@
 #include "Core/Plateau.hpp"
 #include "Core/Case.hpp"
-#include "Core/Random.hpp"
+#include "Core/Des.hpp"
 #include "Entities/Gobelin.hpp"
 #include "Items/PotionSoin.hpp"
 #include <iostream>
@@ -16,16 +16,16 @@ Plateau::Plateau(int largeur, int hauteur): largeur(largeur), hauteur(hauteur) {
             else if (x==largeur-1 && y==hauteur-1) 
                 grille[x][y] = Case(); //CASE DU DRAGON
             else {
-                int tirage = Random::entier(1, 100);
-                if (tirage<=30) {
+                int tirage = Des::D10();
+                if (tirage<=3) {
                     grille[x][y] = Case();
-                } else if (tirage>30 && tirage<=50) {
+                } else if (tirage>3 && tirage<=5) {
                     Gobelin *e = new Gobelin();
                     grille[x][y] = Case(e);
-                } else if (tirage>50 && tirage<=70) {
+                } else if (tirage>5 && tirage<=7) {
                     PotionSoin *o = new PotionSoin();
                     grille[x][y] = Case(o);
-                } else if (tirage >70 && tirage<=80) {
+                } else if (tirage >7 && tirage<=8) {
                     grille[x][y] = Case(2);
                 } else {
                     grille[x][y] = Case();
@@ -41,6 +41,7 @@ int Plateau::getLargeur() { return largeur; }
 int Plateau::getHateur() { return hauteur; }
 
 void Plateau::afficher(int xJoueur, int yJoueur){
+    std::cout << "\033[2J\033[1;1H";
     for (int y=hauteur-1; y>=0; y--) {
         for (int x=0; x<largeur; x++) {
             if (x==xJoueur && y==yJoueur)

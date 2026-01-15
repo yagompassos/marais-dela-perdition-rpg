@@ -20,6 +20,7 @@ public:
 
     // methods
     virtual void utiliser(Personnage* hero);
+    virtual void afficher();
 };
 
 #endif

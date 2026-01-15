@@ -8,3 +8,4 @@ int Objet::getPrix() { return prix; }
 
 // to override:
 void Objet::utiliser(Personnage* hero){}
+void Objet::afficher(){}

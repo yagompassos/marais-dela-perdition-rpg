@@ -12,6 +12,7 @@ public:
     PotionSoin();
 
     void utiliser(Personnage* hero) override;
+    void afficher() override;
 };
 
 #endif
