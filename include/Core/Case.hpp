@@ -25,7 +25,7 @@ public:
     bool contientObjet();
     void retirerEnnemi();
     void retirerItem(); 
-    void afficher();
+    void afficher(bool visible);
 };
 
 #endif

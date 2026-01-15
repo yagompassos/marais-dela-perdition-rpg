@@ -3,6 +3,7 @@
 #include "Core/Des.hpp"
 #include "Entities/Gobelin.hpp"
 #include "Items/PotionSoin.hpp"
+#include "Core/icones.hpp"
 #include <iostream>
 
 // Constructeur
@@ -38,19 +39,18 @@ Plateau::Plateau(int largeur, int hauteur): largeur(largeur), hauteur(hauteur) {
 Plateau::~Plateau(){}
 
 int Plateau::getLargeur() { return largeur; }
-int Plateau::getHateur() { return hauteur; }
+int Plateau::getHauteur() { return hauteur; }
 
 void Plateau::afficher(int xJoueur, int yJoueur){
-    std::cout << "\033[2J\033[1;1H";
+    std::cout << std::endl;
     for (int y=hauteur-1; y>=0; y--) {
+        std::cout << "\t";
         for (int x=0; x<largeur; x++) {
             if (x==xJoueur && y==yJoueur)
-                std::cout << "H";
-            else if (x==largeur-1 && y==hauteur-1)
-                std::cout << "D";
+                std::cout << Icone::JOUEUR;
             else
-                grille[x][y].afficher();
-            std::cout << " ";
+                grille[x][y].afficher(true);
+            std::cout << "    ";
         }
         std::cout << std::endl;
     }

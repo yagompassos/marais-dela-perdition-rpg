@@ -45,14 +45,28 @@ bool Personnage::appauvrir(int prix) {
 }
 
 void Personnage::afficherInventaire(){
-    std::cout<< "| ";
+    std::cout << std::endl;
+    std::cout << "======INVENTAIRE======" << std::endl;
+    std::cout << std::endl;
+    std::cout << "    1   2   3   4 " << std::endl;
+    std::cout<< "  | ";
     for (int i=0; i<inventaire.size(); i++){
         if (inventaire[i]==nullptr)
-            std::cout << "   | ";
+        std::cout << " ";
         else 
-            std::cout << inventaire[i]->getNom() << " |";
+        inventaire[i]->afficher();
+        std::cout << " | ";
     }
-    std::cout << std::endl;
+    std::cout << std::endl << std::endl;
+    std::cout << "======================" << std::endl;
+}
+
+void Personnage::afficherStats() {
+    std::cout << std::endl << std::endl;
+    std::cout << "------------------------------------------------ hero stats ------------------------------------------------" << std::endl << std::endl;
+    std::cout << "\tHP: " << vie << "/" << vieMax;
+    std::cout << "\t\tGold: " << gold;
+    std::cout << std::endl << std::endl;
 }
 
 bool Personnage::ajouterObjet(Objet* obj) {
@@ -70,6 +84,8 @@ bool Personnage::ajouterObjet(Objet* obj) {
 
 bool Personnage::utiliserObjet(int index){
     if (index >= inventaire.size())
+        return false;
+    if (inventaire[index]==nullptr)
         return false;
     inventaire[index]->utiliser(this);
     inventaire[index] = nullptr;

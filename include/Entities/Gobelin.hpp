@@ -11,6 +11,7 @@ public:
     Gobelin();
     
     void attaquer(Personnage* hero) override;
+    void afficher() override;
 };
 
 #endif

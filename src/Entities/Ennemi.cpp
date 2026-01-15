@@ -7,6 +7,7 @@ Ennemi::Ennemi(std::string race, int vieMax, int force, int recompenseOr, bool v
 
 // to be overriten
 void Ennemi::attaquer(Personnage* hero){}
+void Ennemi::afficher() {}
 
 void Ennemi::recevoirDegats(int degat) {
     if (degat < vie)

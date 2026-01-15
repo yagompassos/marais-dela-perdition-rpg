@@ -28,6 +28,7 @@ public:
 
     // methods
     virtual void attaquer(Personnage* hero);
+    virtual void afficher();
     void recevoirDegats(int degat);
     bool estVivant();
     bool estVolable();
