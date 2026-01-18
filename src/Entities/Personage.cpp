@@ -93,17 +93,45 @@ void Personnage::afficherStats() {
     std::cout << std::endl << std::endl;
 }
 
-bool Personnage::ajouterObjet(Objet* obj) {
-    int i=0;
-    while (inventaire[i] != nullptr) {
-        i++;
-        if (i>=inventaire.size()) {
-            std::cout << "inventaire rempli." << std::endl;
+bool Personnage::estInventaireComplet() {
+    for (auto obj : inventaire){
+        if (obj == nullptr)
             return false;
+    }
+    return true;
+}
+
+bool Personnage::ajouterObjet(Objet* obj) {
+    int i = 0;
+    if (estInventaireComplet()) {
+        i = remplacerObjetSurInventaire(obj);
+        if (i==0)
+            return false;
+    }
+    else {
+        while (inventaire[i] != nullptr) {
+            i++;
+            if (i>=inventaire.size()) {
+                remplacerObjetSurInventaire(obj);
+            }
         }
     }
     inventaire[i] = obj;
     return true;
+}
+
+int Personnage::remplacerObjetSurInventaire(Objet* obj) {
+    int i;
+    afficherInventaire();
+    std::cout << "Inventaire complet! choisir une option à remplacer" << std::endl;
+    std::cout << "================================================== ACTIONS ==================================================" << std::endl << std::endl;
+    for (i=0; i<inventaire.size(); i++)
+        std::cout << "\t" << i+1 << ". Remplacer "<< inventaire[i]->getNom();
+    std::cout << "\t0. Jeter nouveau objet." << std::endl << std::endl;
+    std::cout << "=============================================================================================================" << std::endl;
+    std::cout << "\t\tOption: " ; 
+    std::cin >> i;
+    return i;
 }
 
 bool Personnage::utiliserObjet(int index){

@@ -4,6 +4,7 @@
 #include "Core/Des.hpp"
 #include "Core/Case.hpp"
 #include "Core/icones.hpp"
+#include "Items/Objet.hpp"
 #include <stdio.h>
 #include <thread>
 #include <chrono>
@@ -153,11 +154,14 @@ void Jeu::boucleExploration() {
                 getchar();
                 etatJeu = EtatJeu::Combat;
             } else if (caseActuel.contientObjet()) {
+                Objet *obj= caseActuel.getObjet();
                 afficherTitre();
-                std::cout << std::endl<< std::endl<< std::endl << "Vous avez trouvez un " << std::endl;
+                std::cout << std::endl<< std::endl<< std::endl << "Vous avez trouvez un "  << obj->getNom() << "!" << std::endl;
                 std::cout << "Appuyez sur ENTER pour ajouter au inventaire." << std::endl;
                 std::cin.ignore();
                 getchar();
+                if ( joueur->ajouterObjet(obj) ) 
+                    caseActuel.retirerItem();
             }
             break;
 
@@ -176,8 +180,6 @@ void Jeu::boucleExploration() {
             break;
             // OPTION 3. OUVRIR MARCHAND
         case 3:
-            joueur->enricher(10);
-            joueur->recevoirDegats(15);
             do {
                 afficherTitre();
                 joueur->afficherStats();
@@ -279,23 +281,23 @@ void Jeu::afficherOptionsPreJeu() {
 }
 
 void Jeu::afficherOptionsExploration() {
-    std::cout << "================================================ ACTIONS ================================================" << std::endl << std::endl;
+    std::cout << "================================================== ACTIONS ==================================================" << std::endl << std::endl;
     std::cout << "\t1. Bouger \t 2. Inventaire \t\t 3. Marchand \t\t 4. Quitter Jeu" << std::endl << std::endl;
-    std::cout << "=========================================================================================================" << std::endl;
+    std::cout << "=============================================================================================================" << std::endl;
     std::cout << "\t\tOption: " ;
 }
 
 void Jeu::afficherActionsMarchand(){
-    std::cout << "================================================ ACTIONS ================================================" << std::endl << std::endl;
-    std::cout << "\t1. acheter Potion \t 2. acheter Bouclier \t 3. acheter Epee \t 4. acheter Parchemin \t 5. Revenir" << std::endl << std::endl;
-    std::cout << "=========================================================================================================" << std::endl;
+    std::cout << "================================================== ACTIONS ==================================================" << std::endl << std::endl;
+    std::cout << "\t1. acheter Potion \t 2. acheter Bouclier \t 3. acheter Epee \t 4. acheter Parchemin \t 0. Revenir" << std::endl << std::endl;
+    std::cout << "=============================================================================================================" << std::endl;
     std::cout << "\t\tOption: " ;
 }
 
 void Jeu::afficherActionsCombat(){
-    std::cout << "================================================ ACTIONS ================================================" << std::endl << std::endl;
+    std::cout << "================================================== ACTIONS ==================================================" << std::endl << std::endl;
     std::cout << "\t1. Attaque basique \t 2. Attaque Fort \t 3. Inventaire \t 4. Fuir " << std::endl << std::endl;
-    std::cout << "=========================================================================================================" << std::endl;
+    std::cout << "=============================================================================================================" << std::endl;
     std::cout << "\t\tOption: " ;
 }
 
@@ -314,7 +316,7 @@ void Jeu::animationDes() {
 
 void Jeu::afficherTitre() {
     std::cout << "\033[2J\033[1;1H";
-    std::cout << "=========================================== MARAIS DE LA PERDITION ===========================================" << std::endl << std::endl;
+    std::cout << "============================================= MARAIS DE LA PERDITION =============================================" << std::endl << std::endl;
 }
 
 

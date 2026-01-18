@@ -47,13 +47,16 @@ public:
     virtual void attaqueBasique(Ennemi* e);
     bool fuir();
     void recevoirDegats(int degat);
+    bool estInventaireComplet();
     bool ajouterObjet(Objet* obj);
+    int remplacerObjetSurInventaire(Objet* obj);
     void curer(int v);
     void enricher(int g);
     bool appauvrir(int prix);
     void afficherInventaire();
     void afficherStats();
     bool utiliserObjet(int index);
+
 };
 
 #endif
