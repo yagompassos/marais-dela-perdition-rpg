@@ -17,7 +17,7 @@ void Personnage::attaqueBasique(Ennemi* e){}
 
 bool Personnage::fuir() {
     int d20 = Des::D20();
-std::cout << d20 ;
+    std::cout << d20 ;
     
     if (d20 == 1) {
         std::cout << std::endl<< "FAIL!, vous vous avez raté la fuite" << std::endl;
@@ -65,6 +65,12 @@ bool Personnage::appauvrir(int prix) {
         return false;
     } 
     gold -= prix;
+    return true;
+}
+
+bool Personnage::estVivant() {
+    if (vie <= 0)
+        return false;
     return true;
 }
 

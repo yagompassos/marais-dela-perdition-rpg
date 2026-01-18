@@ -199,76 +199,32 @@ void Jeu::boucleExploration() {
 }
 
 void Jeu::boucleCombat(){
-    Case caseActuel = plateau.getCase(xJoueur, yJoueur);
-    Ennemi *ennemi = caseActuel.getEnnemi();
+    Ennemi *ennemi = plateau.getCase(xJoueur, yJoueur).getEnnemi();
     int op, tirage, recompense;
-    bool sortie;
 
     do {
-        afficherTitre();
-        ennemi->afficherStats();
-        joueur->afficherStats();
-        afficherActionsCombat();
-        std::cin >> op;
-        switch (op) {
-            case 1:
-                afficherTitre();
-                ennemi->afficherStats();
-                joueur->afficherStats();
-                std::cout << "\tAttaque Basique!"<< std::endl;
-                std::cout << "\tAppuyer ENTER pour Lancer le Des 20" << std::endl;
-                std::cin.ignore();
-                getchar();
-                //affichage des
-                afficherTitre();
-                ennemi->afficherStats();
-                joueur->afficherStats();
-                std::cout << std::endl;
-                animationDes();
-                joueur->attaqueBasique(ennemi);
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                afficherTitre();
-                ennemi->afficherStats();
-                joueur->afficherStats();
-                std::cout << "\tTu essaie de Fuir!" << std::endl;
-                std::cout << "\tAppuyer ENTER pour Lancer le Des 20" << std::endl;
-                std::cin.ignore();
-                getchar();
-                //affichage des
-                afficherTitre();
-                ennemi->afficherStats();
-                joueur->afficherStats();
-                std::cout << std::endl;
-                animationDes();
-                sortie= joueur->fuir();
-                etatJeu = EtatJeu::Exploration;
-                std::cout << "\tAppuyer ENTER pour continuer" << std::endl;
-                std::cin.ignore();
-                getchar();
-                break;
-            }
+        rondJoueur(ennemi);
 
-            if ( !ennemi->estVivant() ){
-                sortie=true;
-                recompense = ennemi->getRecompenseOr();
-                etatJeu = EtatJeu::Exploration;
-                joueur->enricher(recompense);
-                caseActuel.retirerEnnemi();
-                std::cout << std::endl;
-                std::cout << "\tYou killed them all!" << std::endl;
-                std::cout << "\t+" << recompense << Icone::GOLD << std::endl;
-                std::cout << std::endl;
-                std::cout << "\tAppuyer ENTER pour continuer!" << std::endl;
-                std::cin.ignore();
-                getchar();
-            }
-    } while(!sortie);
+        if ( !ennemi->estVivant() ){
+            recompense = ennemi->getRecompenseOr();
+            etatJeu = EtatJeu::Exploration;
+            joueur->enricher(recompense);
+            plateau.getCase(xJoueur, yJoueur).retirerEnnemi();
+            std::cout << std::endl;
+            std::cout << "\tYou killed them all!" << std::endl;
+            std::cout << "\t+" << recompense << Icone::GOLD << std::endl;
+            std::cout << std::endl;
+            std::cout << "\tAppuyer ENTER pour continuer!" << std::endl;
+            std::cin.ignore();
+            getchar();
+        } else 
+            rondEnnemi(ennemi);
+        
+        if ( !joueur->estVivant() ) {
+            etatJeu = EtatJeu::GameOver;
             
+        }
+    } while(etatJeu == EtatJeu::Combat);
 }
 
 void Jeu::afficherOptionsPreJeu() {
@@ -329,3 +285,74 @@ bool Jeu::estCaseVisible(int x, int y) const {
 
 int Jeu::getXJoueur(){ return xJoueur; }
 int Jeu::getYJoueur(){ return yJoueur; }
+
+void Jeu::rondJoueur(Ennemi *ennemi) {
+    int op;
+
+    afficherTitre();
+    ennemi->afficherStats();
+    joueur->afficherStats();
+    afficherActionsCombat();
+    std::cin >> op;
+
+    switch (op) {
+        case 1:
+            afficherTitre();
+            ennemi->afficherStats();
+            joueur->afficherStats();
+            std::cout << "\tAttaque Basique!"<< std::endl;
+            std::cout << "\tAppuyer ENTER pour Lancer le Des 20" << std::endl;
+            std::cin.ignore();
+            getchar();
+            //affichage des
+            afficherTitre();
+            ennemi->afficherStats();
+            joueur->afficherStats();
+            std::cout << std::endl;
+            animationDes();
+            joueur->attaqueBasique(ennemi);
+            std::cout << std::endl << "\t ENTER pour continuer" << std::endl;
+            std::cin.ignore();
+            getchar();
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            afficherTitre();
+            ennemi->afficherStats();
+            joueur->afficherStats();
+            std::cout << "\tTu essaie de Fuir!" << std::endl;
+            std::cout << "\tAppuyer ENTER pour Lancer le Des 20" << std::endl;
+            std::cin.ignore();
+            getchar();
+            // affichage des
+            afficherTitre();
+            ennemi->afficherStats();
+            joueur->afficherStats();
+            std::cout << std::endl;
+            animationDes();
+            if ( joueur->fuir() ) {
+                etatJeu = EtatJeu::Exploration;
+                std::cout << "\tAppuyer ENTER pour continuer" << std::endl;
+                std::cin.ignore();
+                getchar();
+            }
+            break;
+        }
+}
+
+void Jeu::rondEnnemi(Ennemi *ennemi) {
+    afficherTitre();
+    ennemi->afficherStats();
+    joueur->afficherStats();
+    std::cout << std::endl;
+    std::cout << ennemi->getRace() << "t'a attaque" << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    ennemi->attaquer(joueur);
+    std::cout << "Damage";
+    std::cout << "\tAppuyer ENTER pour continuer" << std::endl;
+    std::cin.ignore();
+    getchar();
+}

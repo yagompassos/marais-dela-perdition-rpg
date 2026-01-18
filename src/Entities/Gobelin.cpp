@@ -2,11 +2,11 @@
 #include "Entities/Personnage.hpp"
 #include "Core/icones.hpp"
 #include <iostream>
-
-Gobelin::Gobelin() : Ennemi("Goblin", 12, 15, 5, true) {}
+                            //race    vm frc gld volable
+Gobelin::Gobelin() : Ennemi("Goblin", 45, 17, 5, true) {}
 
 void Gobelin::attaquer(Personnage* hero){
-    hero->recevoirDegats(4);
+    hero->recevoirDegats(force);
 }
 
 void Gobelin::afficher() {

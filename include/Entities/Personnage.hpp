@@ -56,7 +56,7 @@ public:
     void afficherInventaire();
     void afficherStats();
     bool utiliserObjet(int index);
-
+    bool estVivant();
 };
 
 #endif

@@ -7,6 +7,7 @@
 #include "Core/EtatJeu.hpp"
 
 class Personnage;
+class Ennemi;
 
 class Jeu {
 private: 
@@ -37,6 +38,8 @@ public:
     int getXJoueur();
     int getYJoueur();
     bool estCaseVisible(int x, int y) const;
+    void rondJoueur(Ennemi *ennemi);
+    void rondEnnemi(Ennemi *ennemi);
 };
 
 #endif
