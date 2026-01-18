@@ -161,7 +161,7 @@ void Jeu::boucleExploration() {
                 std::cin.ignore();
                 getchar();
                 if ( joueur->ajouterObjet(obj) ) 
-                    caseActuel.retirerItem();
+                    plateau.getCase(xJoueur, yJoueur).retirerItem();
             }
             break;
 
