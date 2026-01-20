@@ -6,6 +6,7 @@
 
 //                            vm frc pwr, dex cha gld sizeInventory
 Voleur::Voleur() : Personnage(70, 18, 3, 75, 100, 10, 5) {}
+Voleur::Voleur(std::string nom) : Personnage(nom, 70, 18, 3, 75, 100, 10, 5) {}
 
 std::string Voleur::getEmoji() const { return Icone::VOLEUR; }
 

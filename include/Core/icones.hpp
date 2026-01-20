@@ -9,7 +9,7 @@ namespace Icone {
     const std::string DRAGON   = "🐲​";
     const std::string GOLD     = "💰";
     const std::string POTION    = "🧪";
-    const std::string EPEE   = "⚔️";
+    const std::string EPEE   = "🗡️";
     const std::string PARCHE    = "📜​";
     const std::string BOUCLIER   = "🛡️​";
     const std::string ILE      = "🏝️​";

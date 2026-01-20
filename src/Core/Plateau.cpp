@@ -3,6 +3,7 @@
 #include "Core/Des.hpp"
 #include "Entities/Gobelin.hpp"
 #include "Entities/Orc.hpp"
+#include "Entities/Dragon.hpp"
 #include "Items/PotionSoin.hpp"
 #include "Items/Bouclier.hpp"
 #include "Items/Epee.hpp"
@@ -16,12 +17,13 @@ Plateau::Plateau(int largeur, int hauteur): largeur(largeur), hauteur(hauteur) {
     grille.resize(largeur);
     for (int x = 0; x < largeur; x++) {
         grille[x].resize(hauteur);
-        for (int y = 0; y < hauteur; y++) {
+        for (int y = 0; y < hauteur; y++) { // Cases du heros 
             if (x==0 && y==0)
-                grille[x][y] = Case(); // Cases du heros 
-            else if (x==largeur-1 && y==hauteur-1) 
-                grille[x][y] = Case(); // CASE DU DRAGON
-            else {
+                grille[x][y] = Case();
+            else if (x==largeur-1 && y==hauteur-1) { // CASE DU DRAGON
+                Ennemi *drg = new Dragon();
+                grille[x][y] = Case(drg); 
+            } else {
                 tirage1 = Des::D10();
                 if (tirage1<=3) {
                     grille[x][y] = Case();

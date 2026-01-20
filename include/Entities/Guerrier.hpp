@@ -8,6 +8,7 @@ class Ennemi;
 class Guerrier : public Personnage {
 public:
     Guerrier();
+    Guerrier(std::string nom);
     void attaqueBasique(Ennemi* e) override;
     void habiliteSpeciale(Ennemi *e) override;
     std::string getEmoji() const override;

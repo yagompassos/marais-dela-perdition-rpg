@@ -40,6 +40,7 @@ public:
     bool estCaseVisible(int x, int y) const;
     bool rondJoueur(Ennemi *ennemi);
     void rondEnnemi(Ennemi *ennemi);
+    void rondDragon(Ennemi *ennemi);
 };
 
 #endif

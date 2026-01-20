@@ -5,6 +5,7 @@
 
 //                        vm frc pwr, dex cha gld sizeInventory
 Mage::Mage() : Personnage(60, 10, 20, 25, 35, 5, 4) {}
+Mage::Mage(std::string nom) : Personnage(nom, 60, 10, 20, 25, 35, 5, 4) {}
 
 std::string Mage::getEmoji() const { return Icone::MAGE; }
 

@@ -31,6 +31,8 @@ public:
     // methods
     virtual void attaquer(Personnage* hero);
     virtual void afficher();
+    virtual void special(Personnage* hero);
+
     void afficherStats();
     void recevoirDegats(int degat);
     bool estVivant();

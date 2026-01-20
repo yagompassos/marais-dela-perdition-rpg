@@ -72,7 +72,8 @@ void Jeu::lancer(){
 
 void Jeu::bouclePreJeu() {
     int op;
-/*
+    std::string nom;
+
     std::cout << "\033[2J\033[1;1H";
     std::cout << std::endl << "\t\t\t\t";
     for (int i=0; i<5; i++){
@@ -88,21 +89,25 @@ void Jeu::bouclePreJeu() {
     std::cout << "\t\t\tIl y a des ennemis proche, fait gaffe."<< std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(4000));
     std::cout << "\033[2J\033[1;1H";
-*/
+    std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+    std::cout << "Comment vous voulez être appelé, ami courageux?" << std::endl;
+    std::cout << "Choisir un nom: ";
+    std::cin >> nom;
+
     afficherOptionsPreJeu();
     std::cin >> op;
     switch (op) {
         case 1:
             std::cout << "Guerrier! Bonne courage." << std::endl;
-            joueur = new Guerrier();
+            joueur = new Guerrier(nom);
             break;
         case 2:
             std::cout << "Mage! La magie est forte en vous" << std::endl;
-            joueur = new Mage();
+            joueur = new Mage(nom);
             break;
         case 3:
             std::cout << "Voleur! La guilde vous a bien preparé" << std::endl;
-            joueur = new Voleur();
+            joueur = new Voleur(nom);
             break;
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
@@ -171,7 +176,6 @@ void Jeu::boucleExploration() {
             // Verifie si la case arrivé a quelque chose
             caseActuel = plateau.getCase(xJoueur, yJoueur);
             caseActuel->marquerVisite();
-            int gld = caseActuel->getGoldTrouve();
             if (caseActuel->contientEnnemi()) {
                 afficherTitre();
                 std::cout << std::endl<< std::endl<< std::endl << "DANGER! " << caseActuel->getEnnemi()->getRace() << "!" << std::endl;
@@ -188,13 +192,13 @@ void Jeu::boucleExploration() {
                 getchar();
                 if ( joueur->ajouterObjet(obj) ) 
                     caseActuel->retirerItem();
-            } else if (gld)
+            } else if (caseActuel->getGoldTrouve() != 0)
                 afficherTitre();
-                std::cout << std::endl<< std::endl<< std::endl << "Vous avez trouvez "  << gld << "coins!" << std::endl;
+                std::cout << std::endl<< std::endl<< std::endl << "Vous avez trouvez "  << caseActuel->getGoldTrouve() << " coins!" << std::endl;
                 std::cout << "Appuyez sur ENTER pour les prendre" << std::endl;
                 std::cin.ignore();
                 getchar();   
-                joueur->enricher(gld);
+                joueur->enricher(caseActuel->getGoldTrouve());
                 caseActuel->setGoldtrouve(0);        
                 break;
 
@@ -225,6 +229,7 @@ void Jeu::boucleExploration() {
 void Jeu::boucleCombat(){
     Ennemi *ennemi = plateau.getCase(xJoueur, yJoueur)->getEnnemi();
     int op, tirage, recompense;
+    bool boss = (ennemi->getRace() == "DRAGON");
 
     do {
         while (!rondJoueur(ennemi));
@@ -242,6 +247,9 @@ void Jeu::boucleCombat(){
             std::cin.ignore();
             getchar();
         } else 
+        if (boss)
+            rondDragon(ennemi);
+        else
             rondEnnemi(ennemi);
         
         if ( !joueur->estVivant() ) {
@@ -407,10 +415,27 @@ void Jeu::rondEnnemi(Ennemi *ennemi) {
     ennemi->afficherStats();
     joueur->afficherStats();
     std::cout << std::endl;
-    std::cout << ennemi->getRace() << "t'a attaque" << std::endl;
+    std::cout << ennemi->getRace() << " vous attaque" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     ennemi->attaquer(joueur);
-    std::cout << "Damage";
+    std::cout << "Degats: " << ennemi->getForce();
+    std::cout << "\tAppuyer ENTER pour continuer" << std::endl;
+    std::cin.ignore();
+    getchar();
+}
+
+void Jeu::rondDragon(Ennemi *ennemi) {
+    afficherTitre();
+    ennemi->afficherStats();
+    joueur->afficherStats();
+    int tirage = Des::D10();
+    if (tirage <=7) {
+        ennemi->attaquer(joueur);
+        std::cout << "Damage" << ennemi->getForce();
+    } else { 
+        ennemi->special(joueur);
+    }
+    std::cout << std::endl;
     std::cout << "\tAppuyer ENTER pour continuer" << std::endl;
     std::cin.ignore();
     getchar();
