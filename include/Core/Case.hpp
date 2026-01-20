@@ -22,6 +22,9 @@ public:
     //getters
     Ennemi* getEnnemi();
     Objet* getObjet();
+    int getGoldTrouve();
+
+    void setGoldtrouve(int gld);
 
     bool estVide();
     bool estVisite();

@@ -12,6 +12,9 @@ Case::~Case(){}
 
 Ennemi* Case::getEnnemi(){ return ennemi; }
 Objet* Case::getObjet(){ return objet; } 
+int Case::getGoldTrouve() { return goldTrouve; }
+
+void Case::setGoldtrouve(int gld) { goldTrouve = gld; }
 
 bool Case::estVisite() { return visite; }
 void Case::marquerVisite() { visite = true; }

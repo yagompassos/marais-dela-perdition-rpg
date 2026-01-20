@@ -23,7 +23,7 @@ void Jeu::afficherPlateau(){
             if (x==xJoueur && y==yJoueur)
                 std::cout << joueur->getEmoji();
             else {
-                bool visible = estCaseVisible(x, y);
+                bool visible = estCaseVisible(x, y) || plateau.getCase(x, y)->estVisite();
                 plateau.getCase(x, y)->afficher(visible);
             }
             std::cout << "   ";
@@ -170,6 +170,8 @@ void Jeu::boucleExploration() {
             }
             // Verifie si la case arrivé a quelque chose
             caseActuel = plateau.getCase(xJoueur, yJoueur);
+            caseActuel->marquerVisite();
+            int gld = caseActuel->getGoldTrouve();
             if (caseActuel->contientEnnemi()) {
                 afficherTitre();
                 std::cout << std::endl<< std::endl<< std::endl << "DANGER! " << caseActuel->getEnnemi()->getRace() << "!" << std::endl;
@@ -186,8 +188,15 @@ void Jeu::boucleExploration() {
                 getchar();
                 if ( joueur->ajouterObjet(obj) ) 
                     caseActuel->retirerItem();
-            }
-            break;
+            } else if (gld)
+                afficherTitre();
+                std::cout << std::endl<< std::endl<< std::endl << "Vous avez trouvez "  << gld << "coins!" << std::endl;
+                std::cout << "Appuyez sur ENTER pour les prendre" << std::endl;
+                std::cin.ignore();
+                getchar();   
+                joueur->enricher(gld);
+                caseActuel->setGoldtrouve(0);        
+                break;
 
             // OPTION 2. AFFICHER INVENTAIRE
         case 2: 
@@ -301,6 +310,8 @@ void Jeu::afficherTitre() {
 
 
 bool Jeu::estCaseVisible(int x, int y) const {
+    
+    
     int dx = std::abs(x - xJoueur);
     int dy = std::abs(y - yJoueur);
 
